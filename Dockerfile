@@ -10,7 +10,6 @@ RUN apt-get update \
        curl \
     && curl -s https://install.citusdata.com/community/deb.sh | bash \
     && apt-get install -y postgresql-$PG_MAJOR-citus-6.1=$CITUS_VERSION \
-    && apt-get purge -y --auto-remove curl \
     && rm -rf /var/lib/apt/lists/*
 
 # add citus to default PostgreSQL config
@@ -21,6 +20,9 @@ COPY 000-symlink-workerlist.sh 001-create-citus-extension.sql /docker-entrypoint
 
 # add our wrapper entrypoint script
 COPY citus-entrypoint.sh /
+
+# add tutorial files
+COPY tutorial.sh /
 
 # expose workerlist via volume
 VOLUME /etc/citus

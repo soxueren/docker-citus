@@ -3,7 +3,7 @@ version: '2'
 services:
   master:
     container_name: 'citus_master'
-    image: 'citusdata/citus:6.1.0'
+    image: 'citus_tutorial'
     ports: ['5432:5432']
     labels: ['com.citusdata.role=Master']
     volumes: ['/var/run/postgresql']
