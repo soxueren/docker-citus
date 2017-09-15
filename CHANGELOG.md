@@ -1,3 +1,7 @@
+### citus-docker v7.0.1-1.docker (September 15, 2017) ###
+
+* Adds Alpine Linux variants of our stable image
+
 ### citus-docker v7.0.1 (September 12, 2017) ###
 
 * Bump Citus version to 7.0.1
