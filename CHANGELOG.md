@@ -1,3 +1,9 @@
+### citus-docker v7.0.2 (October 2, 2017) ###
+
+* Bump Citus version to 7.0.2
+
+* Bump membership manager to 0.2.0
+
 ### citus-docker v7.0.1-1.docker (September 15, 2017) ###
 
 * Adds Alpine Linux variants of our stable image
