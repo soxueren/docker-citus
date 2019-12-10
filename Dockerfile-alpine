@@ -1,4 +1,6 @@
 FROM postgres:12.1-alpine
+
+# install citus
 ARG VERSION=9.1.0
 LABEL maintainer="Citus Data https://citusdata.com" \
       org.label-schema.name="Citus" \
