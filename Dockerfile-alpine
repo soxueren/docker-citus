@@ -55,8 +55,8 @@ RUN apk add --no-cache --virtual .build-deps \
         perl 
         
 RUN  apk add --no-cache --virtual .build-deps-edge \
-        --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \    
-        --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
+        --repository https://mirrors.aliyun.com/alpine/edge/testing \    
+        --repository http://mirrors.aliyun.com/alpine/v3.9/main \
         gdal-dev \
         geos-dev \
         proj4-dev \
