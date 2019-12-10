@@ -57,8 +57,9 @@ RUN apk add --no-cache --virtual .build-deps \
         perl 
         
 RUN  apk add --no-cache --virtual .build-deps-edge \
-        --repository https://mirrors.aliyun.com/alpine/edge/testing \    
-        --repository http://mirrors.aliyun.com/alpine/v3.9/main \
+        --repository https://mirrors.aliyun.com/alpine/edge/testing \
+        --repository http://mirrors.aliyun.com/alpine/v3.10/main \
+        --repository http://mirrors.aliyun.com/alpine/v3.10/community \
         gdal-dev \
         geos-dev \
         proj4-dev \
@@ -75,8 +76,9 @@ RUN  cd /usr/src/postgis \
     && apk add --no-cache --virtual .postgis-rundeps \
         json-c \
     && apk add --no-cache --virtual .postgis-rundeps-edge \
-        --repository https://mirrors.aliyun.com/alpine/edge/testing \    
-        --repository http://mirrors.aliyun.com/alpine/v3.9/main \  
+        --repository https://mirrors.aliyun.com/alpine/edge/testing \
+        --repository http://mirrors.aliyun.com/alpine/v3.10/main \
+        --repository http://mirrors.aliyun.com/alpine/v3.10/community \
         geos \
         gdal \
         proj4 \
