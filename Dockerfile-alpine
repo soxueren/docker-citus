@@ -73,8 +73,8 @@ RUN  cd /usr/src/postgis \
     && apk add --no-cache --virtual .postgis-rundeps \
         json-c \
     && apk add --no-cache --virtual .postgis-rundeps-edge \
-        --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \    
-        --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \        
+        --repository https://mirrors.aliyun.com/alpine/edge/testing \    
+        --repository http://mirrors.aliyun.com/alpine/v3.9/main \  
         geos \
         gdal \
         proj4 \
