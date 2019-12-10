@@ -42,9 +42,9 @@ RUN  wget -O postgis.tar.gz  "https://github.com/postgis/postgis/archive/$POSTGI
         --file postgis.tar.gz \
         --directory /usr/src/postgis \
         --strip-components 1 \
-&& rm postgis.tar.gz \
-    \
-    && apk add --no-cache --virtual .build-deps \
+&& rm postgis.tar.gz 
+
+RUN apk add --no-cache --virtual .build-deps \
         autoconf \
         automake \
         g++ \
