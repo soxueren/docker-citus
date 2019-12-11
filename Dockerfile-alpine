@@ -96,8 +96,8 @@ RUN apk add \
 		proj \
 		protobuf-c
 
-COPY --chown=postgres ./initdb-postgis.sh /docker-entrypoint-initdb.d/postgis.sh
-COPY --chown=postgres ./update-postgis.sh /usr/local/bin
+COPY  ./initdb-postgis.sh /docker-entrypoint-initdb.d/postgis.sh
+COPY  ./update-postgis.sh /usr/local/bin
     
 # add citus to default PostgreSQL config
 RUN echo "shared_preload_libraries='citus'" >> /usr/local/share/postgresql/postgresql.conf.sample
