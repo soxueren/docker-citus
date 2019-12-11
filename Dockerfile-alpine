@@ -1,3 +1,4 @@
+#ARG POSTGRES_VERSION
 FROM postgres:12.1-alpine
 
 # install citus
@@ -32,7 +33,10 @@ LABEL maintainer="Citus Data https://citusdata.com" \
     rm -rf "citus-${VERSION}" "v${VERSION}.tar.gz" && \
     apk del builddeps
     
-# install POSTGIS 
+# install POSTGIS
+#ARG POSTGIS_VERSION
+#ARG POSTGIS_SHA256
+
 ENV POSTGIS_VERSION 2.5.2
 ENV POSTGIS_SHA256 225aeaece00a1a6a9af15526af81bef2af27f4c198de820af1367a792ee1d1a9
 
@@ -46,47 +50,51 @@ RUN  wget -O postgis.tar.gz  "https://github.com/postgis/postgis/archive/$POSTGI
         --strip-components 1 \
 && rm postgis.tar.gz 
 
-RUN apk add --no-cache --virtual .build-deps \
-        autoconf \
-        automake \
-        g++ \
-        json-c-dev \
-        libtool \
-        libxml2-dev \
-        make \
-        perl 
-        
-RUN  apk add --no-cache --virtual .build-deps-edge \
-        --repository https://mirrors.aliyun.com/alpine/edge/testing \
-        --repository http://mirrors.aliyun.com/alpine/v3.10/main \
-        --repository http://mirrors.aliyun.com/alpine/v3.10/community \
-        gdal-dev \
-        geos-dev \
-        proj4-dev \
-        protobuf-c-dev 
-        
-RUN  cd /usr/src/postgis \
-    && ./autogen.sh \
-# configure options taken from:
-# https://anonscm.debian.org/cgit/pkg-grass/postgis.git/tree/debian/rules?h=jessie
-    && ./configure \
-#       --with-gui \
-    && make \
-    && make install \
-    && apk add --no-cache --virtual .postgis-rundeps \
-        json-c \
-    && apk add --no-cache --virtual .postgis-rundeps-edge \
-        --repository https://mirrors.aliyun.com/alpine/edge/testing \
-        --repository http://mirrors.aliyun.com/alpine/v3.10/main \
-        --repository http://mirrors.aliyun.com/alpine/v3.10/community \
-        geos \
-        gdal \
-        proj4 \
-        protobuf-c 
-        
-RUN  cd / \
-    && rm -rf /usr/src/postgis \
-    && apk del .fetch-deps .build-deps .build-deps-edge
+RUN apk add \
+	--no-cache \
+	--virtual .build-deps \
+		autoconf \
+		automake \
+		clang-dev \
+		json-c-dev \
+		libtool \
+		libxml2-dev \
+		llvm8 \
+		make \
+		perl \
+&& apk add \
+	--no-cache \
+	--virtual .build-deps-edge \
+	--repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
+	--repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
+		g++ \
+		gdal-dev \
+		geos-dev \
+		proj-dev \
+		protobuf-c-dev \
+&& cd /usr/src/postgis \
+&& ./autogen.sh \
+&& ./configure \
+&& make \
+&& make install \
+&& cd / \
+&& rm -r /usr/src/postgis \
+&& apk del \
+	.build-deps \
+	.build-deps-edge \
+&& apk add \
+	--no-cache \
+	--virtual .postgis-rundeps \
+		json-c \
+&& apk add \
+	--no-cache \
+	--virtual .postgis-rundeps-edge \
+	--repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
+	--repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
+		geos \
+		gdal \
+		proj \
+		protobuf-c
 
 COPY ./initdb-postgis.sh /docker-entrypoint-initdb.d/postgis.sh
 COPY ./update-postgis.sh /usr/local/bin
